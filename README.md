@@ -84,13 +84,13 @@ import fromHTML from 'from-html'
 fromHTML(htmlString [, options])
 ```
 
-The values of the `ref` attributes will get mapped to the property names of the returned object; it's also possible to get an array of elements (not a node list!) by appending square brackets to the `ref` name, like e.g.
+The values of the `ref` attributes will get mapped to the property names of the returned object; it's also possible to get an array of elements (not a node list!) by appending square brackets to the `ref` name. Example:
 
 ```javascript
 const names = ['Jane', 'John', 'Jimmy']
 
-const { items } = fromHTML(`
-  <ul>
+const { list, items } = fromHTML(`
+  <ul ref="list">
     ${names.map(name => `<li ref="items[]">${name}</li>`).join('')}
   </ul>
 `)
@@ -100,6 +100,19 @@ Possible options are:
 
 - `refAttribute: String` -- the attribute to get the element references from; defaults to `ref`
 - `removeRefAttribute: Boolean` -- whether to remove that attribute afterwards; defaults to `true`
+
+If you want to keep the `ref` attribute it would probably be advisable to use `data-*` attributes, like e.g.
+
+```javascript
+const { container, button } = fromHTML(`
+  <div data-ref="container">
+    <button data-ref="button">Click me!</button>
+  </div>
+`, {
+  refAttribute: 'data-ref',
+  removeRefAttribute: false
+})
+```
 
 ## License
 

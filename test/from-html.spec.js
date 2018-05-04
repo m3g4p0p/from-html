@@ -38,9 +38,21 @@ describe('::fromHTML', () => {
       expect(foo.length).toBe(2)
       expect(foo[0].nextElementSibling).toBe(foo[1])
     })
+
+    it('should work with passing an ID', () => {
+      document.body.innerHTML = `
+        <script type="text/template" id="my-template">
+          <div ref="foo"></div>
+        </script>
+      `
+
+      const { foo } = fromHTML('#my-template')
+
+      expect(foo instanceof window.HTMLElement).toBe(true)
+    })
   })
 
-  describe('arguments', () => {
+  describe('options', () => {
     it('should work with custom attribute names', () => {
       const { foo } = fromHTML(`
         <div data-ref="foo"></div>

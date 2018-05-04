@@ -4,7 +4,7 @@
 
 A tiny utility function to get element references directly from a HTML string.
 
-## Motivation
+## Why?
 
 If you want to create a somewhat complex element tree with JS you may have found yourself writing something like this:
 
@@ -81,6 +81,12 @@ Then include it in your JS like
 
 ```javascript
 import fromHTML from 'from-html'
+```
+
+Or if you prefer the old-fashioned way:
+
+```html
+<script src="./node_modules/from-html/lib/from-html.js"></script>
 ```
 
 ## Usage

@@ -3,10 +3,13 @@
   "version": "0.2.0",
   "author": "m3g4p0p",
   "license": "MIT",
-  "main": "lib/from-html.js",
+  "repository": "https://github.com/m3g4p0p/from-html.js",
+  "browser": "lib/from-html.js",
   "module": "src/from-html.js",
   "devDependencies": {
     "babel-core": "^6.26.3",
+    "babel-loader": "^7.1.4",
+    "babel-plugin-add-module-exports": "^0.2.1",
     "babel-preset-env": "^1.6.1",
     "eslint": "^4.19.1",
     "eslint-config-standard": "^11.0.0",
@@ -21,9 +24,9 @@
     "webpack-cli": "^2.1.2"
   },
   "scripts": {
-    "lint": "eslint lib/from-html.js",
+    "lint": "eslint src/*.js",
     "test": "jasmine --config=jasmine.json",
     "build": "webpack",
-    "prepublish": "yarn lint && yarn test && yarn build"
+    "prepare": "yarn lint && yarn test && yarn build"
   }
 }

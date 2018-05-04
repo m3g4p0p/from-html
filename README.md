@@ -53,8 +53,6 @@ const confirmBtn = overlay.querySelector('.modal__confirm-btn')
 ... but it's still quite verbose, and you have to keep the query selectors in sync with the markup. So here's how it looks like using `fromHTML()`:
 
 ```javascript
-import fromHTML from 'from-html'
-
 const {
   overlay,
   content,

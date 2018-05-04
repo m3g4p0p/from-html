@@ -1,3 +1,10 @@
+/**
+ * Get element references from a HTML string
+ *
+ * @param {string} html - HTML string or ID selector
+ * @param {object?} options - optional options object
+ * @returns {object} - references as specified in the HTML
+ */
 export default function fromHTML (html, {
   refAttribute: attr = 'ref',
   removeRefAttribute: remove = true

@@ -9,12 +9,19 @@ export default function fromHTML (html, {
   refAttribute: attr = 'ref',
   removeRefAttribute: remove = true
 } = {}) {
-  const container = document.createElement('div')
-  const elementId = html[0] === '#' && html.slice(1)
+  let container = null;
+  let elementId = null;
 
-  container.innerHTML = elementId
-    ? document.getElementById(elementId).innerHTML
-    : html
+  if(html instanceof window.Element) {
+    container = html;
+  } else {
+    container = document.createElement('div')
+    elementId = html[0] === '#' && html.slice(1)
+
+    container.innerHTML = elementId
+        ? document.getElementById(elementId).innerHTML
+        : html
+  }
 
   const refs = container.querySelectorAll(`[${attr}]`)
 

@@ -50,6 +50,18 @@ describe('::fromHTML', () => {
 
       expect(foo instanceof window.HTMLElement).toBe(true)
     })
+
+    it('should work with passing an Element', () => {
+      document.body.innerHTML = `
+        <div id="my-element">
+          <div ref="foo"></div>
+        </div>
+      `
+
+      const { foo } = fromHTML(document.getElementById('my-element'))
+
+      expect(foo instanceof window.HTMLElement).toBe(true)
+    })
   })
 
   describe('options', () => {

@@ -3,8 +3,8 @@
   "version": "0.2.0",
   "author": "m3g4p0p",
   "license": "MIT",
-  "main": "lib/from-html.umd.js",
-  "module": "lib/from-html.js",
+  "main": "lib/from-html.js",
+  "module": "src/from-html.js",
   "devDependencies": {
     "babel-core": "^6.26.3",
     "babel-preset-env": "^1.6.1",

@@ -1,5 +1,5 @@
 import { JSDOM } from 'jsdom'
-import fromHTML from '../lib/from-html'
+import fromHTML from '../src/from-html'
 
 describe('::fromHTML', () => {
   beforeEach(() => {

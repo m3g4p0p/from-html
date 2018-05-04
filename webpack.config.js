@@ -1,9 +1,9 @@
 const path = require('path')
 
 module.exports = {
-  entry: './lib/from-html.js',
+  entry: './src/from-html.js',
   output: {
-    filename: 'from-html.umd.js',
+    filename: 'from-html.js',
     path: path.resolve(__dirname, 'lib'),
     library: 'fromHTML',
     libraryTarget: 'umd'

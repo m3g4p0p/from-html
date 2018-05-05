@@ -20,13 +20,15 @@
     "eslint-plugin-standard": "^3.1.0",
     "jasmine": "^3.1.0",
     "jsdom": "^11.10.0",
+    "nodemon": "^1.17.3",
     "webpack": "^4.6.0",
     "webpack-cli": "^2.1.2"
   },
   "scripts": {
-    "lint": "eslint src/*.js",
+    "lint": "eslint src/**/*.js test/**/*.js",
     "test": "jasmine --config=jasmine.json",
-    "build": "webpack",
-    "prepare": "yarn lint && yarn test && yarn build"
+    "build": "yarn lint && yarn test && yarn webpack",
+    "watch": "nodemon --watch src --watch test --exec \"yarn build\"",
+    "prepare": "yarn build"
   }
 }

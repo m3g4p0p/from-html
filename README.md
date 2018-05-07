@@ -74,7 +74,7 @@ const {
 `)
 ```
 
-A simple but complete real-world example can be seen (here)[https://gist.github.com/m3g4p0p/8638c37447c638bede24fc1a767ab486].
+A simple but complete real-world example can be seen [here](https://gist.github.com/m3g4p0p/8638c37447c638bede24fc1a767ab486).
 
 ## Installation
 

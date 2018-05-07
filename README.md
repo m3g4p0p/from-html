@@ -130,6 +130,23 @@ Instead of a HTML string it's also possible to pass an ID selector:
 const { list, items } = fromHTML('#my-template')
 ```
 
+It's possible to pass an DOM Element too:
+
+```html
+<div id="my-element">
+  <ul ref="list">
+    <li ref="items[]">Jane</li>
+    <li ref="items[]">John</li>
+    <li ref="items[]">Jimmy</li>
+  </ul>
+</div>
+```
+
+```javascript
+// list and items are references to existing dom
+const { list, items } = fromHTML(document.getElementById('my-element'))
+```
+
 In the optional second argument the following options can be specified:
 
 - `refAttribute: String` -- the attribute to get the element references from; defaults to `ref`

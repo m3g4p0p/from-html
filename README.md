@@ -10,11 +10,13 @@ If you want to create a somewhat complex element tree with JS you may have found
 
 ```javascript
 const overlay = document.createElement('div')
+const container = document.createElement('div')
 const content = document.createElement('div')
 const cancelBtn = document.createElement('button')
 const confirmBtn = document.createElement('button')
 
 overlay.classList.add('modal__overlay')
+container.classList.add('modal__container')
 content.classList.add('modal__content')
 cancelBtn.classList.add('modal__cancel-btn')
 confirmBtn.classList.add('modal__confirm-btn')
@@ -23,9 +25,10 @@ content.textContent = 'Some message'
 cancelBtn.textContent = 'Cancel'
 confirmBtn.textContent = 'Confirm'
 
-overlay.appendChild(content)
-overlay.appendChild(cancelBtn)
-overlay.appendChild(confirmBtn)
+overlay.appendChild(container)
+container.appendChild(content)
+container.appendChild(cancelBtn)
+container.appendChild(confirmBtn)
 
 cancelBtn.addEventListener('click', () => {/* ... */})
 // ...
@@ -39,9 +42,11 @@ const overlay = document.createElement('div')
 
 modal.innerHTML = `
   <div class="modal__overlay">
-    <div class="modal__content">Some message</div>
-    <button class="modal__cancel-btn">Cancel</button>
-    <button class="modal__confirm-btn">Confirm</button>
+    <div class="modal__container">
+      <div class="modal__content">Some message</div>
+      <button class="modal__cancel-btn">Cancel</button>
+      <button class="modal__confirm-btn">Confirm</button>
+    </div>
   </div>
 `
 
@@ -60,12 +65,16 @@ const {
   confirmBtn
 } = fromHTML(`
   <div class="modal__overlay" ref="overlay">
-    <div class="modal__content" ref="content">Some message</div>
-    <button class="modal__cancel-btn" ref="cancelBtn">Cancel</button>
-    <button class="modal__confirm-btn" ref="confirmBtn">Confirm</button>
+    <div class="modal__container">
+      <div class="modal__content" ref="content">Some message</div>
+      <button class="modal__cancel-btn" ref="cancelBtn">Cancel</button>
+      <button class="modal__confirm-btn" ref="confirmBtn">Confirm</button>
+    </div>
   </div>
 `)
 ```
+
+A simple but complete real-world example can be seen (here)[https://gist.github.com/m3g4p0p/8638c37447c638bede24fc1a767ab486].
 
 ## Installation
 

@@ -161,7 +161,7 @@ The part before the colon specifies the type of the event, the part after it the
 const { button } = fromHTML(`
   <button
     ref="button"
-    on="click:sayHello blur:sayGoobye"
+    on="click:sayHello blur:sayGoodbye"
   >Click me!</button>
 `, {
   sayHello () {
@@ -177,7 +177,7 @@ If the method name is omitted, the listener object itself will be used to handle
 
 ```javascript
 const { button } = fromHTML(`
-  <button ref="button" on="click">Click me!</button>
+  <button ref="button" on="click blur">Click me!</button>
 `, {
   handleEvent ({ type }) {
     switch (type) {
@@ -203,7 +203,7 @@ Name | Type | Default | Description
 `eventAttribute` | `string` | `on` | The attribute denoting event bindings
 `removeRefAttribute` | `boolean` | `true` | Whether to remove the reference attribute afterwards
 `removeEventAttribute` | `boolean` | `true` | Whether to remove the event attribute afterwards
-`assignToEventListener` | `boolean` | `false` | Whether to assign the element references to the event listener; in this case, the merged object will also be returned
+`assignToEventListener` | `boolean` | `false` | Whether to assign the element references to the event listener; in this case, the merged object will be returned
 
 For example, if you want to keep the `ref` attribute you might use `data-*` attributes for HTML compliance:
 

@@ -163,8 +163,10 @@ const { button } = fromHTML(`
   <button ref="button" on="click">Click me!</button>
 `, {
   handleEvent ({ type }) {
-    if (type === 'click) {
-      window.alert('Hello HTML!')
+    switch (type) {
+      case 'click':
+        window.alert('Hello HTML!')
+      // ...
     }
   }
 })

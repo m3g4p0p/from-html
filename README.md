@@ -4,15 +4,13 @@
 
 A tiny utility function to get element references directly from a HTML string.
 
-- [from-html](#from-html)
-  - [Why?](#why)
-  - [Installation](#installation)
-  - [Usage](#usage)
-    - [References](#references)
-    - [Events](#events)
-    - [Options](#options)
-  - [Breaking Changes](#breaking-changes)
-  - [License](#license)
+1. [Why?](#why)
+2. [Usage](#usage)
+  1. [References](#references)
+  2. [Events](#events)
+  3. [Options](#options)
+3. [Breaking Changes](#breaking-changes)
+4. [License](#license)
 
 ## Why?
 

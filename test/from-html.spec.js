@@ -52,11 +52,74 @@ describe('::fromHTML', () => {
     })
   })
 
+  describe('events', () => {
+    it('should call a listener', done => {
+      const { foo } = fromHTML(`
+        <div ref="foo" on="click:handleClick"></div>
+      `, {
+        handleClick () {
+          expect(this).toBe(foo)
+          done()
+        }
+      })
+
+      foo.click()
+    })
+
+    it('should call multiple listeners', done => {
+      let clickReceived
+      let focusReceived
+
+      const { foo } = fromHTML(`
+        <input ref="foo" on="
+          click:handleClick
+          focus:handleFocus
+        "></input>
+      `, {
+        handleClick ({ type }) {
+          expect(type).toBe('click')
+          clickReceived()
+        },
+        handleFocus ({ type }) {
+          expect(type).toBe('focus')
+          focusReceived()
+        }
+      })
+
+      Promise.all([
+        new Promise(resolve => {
+          clickReceived = resolve
+        }),
+        new Promise(resolve => {
+          focusReceived = resolve
+        })
+      ]).then(done)
+
+      foo.click()
+      foo.focus()
+    })
+
+    it('should call handleEvent', done => {
+      const listener = {
+        handleEvent () {
+          expect(this).toBe(listener)
+          done()
+        }
+      }
+
+      const { foo } = fromHTML(`
+        <div ref="foo" on="click"></div>
+      `, listener)
+
+      foo.click()
+    })
+  })
+
   describe('options', () => {
     it('should work with custom attribute names', () => {
       const { foo } = fromHTML(`
         <div data-ref="foo"></div>
-      `, { refAttribute: 'data-ref' })
+      `, null, { refAttribute: 'data-ref' })
 
       expect(foo instanceof window.HTMLElement).toBe(true)
     })
@@ -72,7 +135,7 @@ describe('::fromHTML', () => {
     it('should keep reference attributes if desired', () => {
       const { foo } = fromHTML(`
         <div ref="foo"></div>
-      `, { removeRefAttribute: false })
+      `, null, { removeRefAttribute: false })
 
       expect(foo.getAttribute('ref')).toBe('foo')
     })

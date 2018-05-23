@@ -99,10 +99,12 @@ Or if you prefer the old-fashioned way:
 ## Usage
 
 ```
-fromHTML(htmlString [, options])
+fromHTML(htmlString [, eventListener [, options]])
 ```
 
-The values of the `ref` attributes will get mapped to the property names of the returned object; it's also possible to get an array of elements (not a node list!) by appending square brackets to the `ref` name:
+### References
+
+The values of the `ref` attributes will get mapped to the property names of the returned object; you can also get an array of elements (not a node list!) by appending square brackets to the `ref` name:
 
 ```javascript
 const names = ['Jane', 'John', 'Jimmy']
@@ -130,10 +132,60 @@ Instead of a HTML string it's also possible to pass an ID selector:
 const { list, items } = fromHTML('#my-template')
 ```
 
-In the optional second argument the following options can be specified:
+### Events
 
-- `refAttribute: String` -- the attribute to get the element references from; defaults to `ref`
-- `removeRefAttribute: Boolean` -- whether to remove that attribute afterwards; defaults to `true`
+While at it, you can pass an event listener object and add event bindings with `on` attributes:
+
+```javascript
+const { button } = fromHTML(`
+  <button ref="button" on="click:sayHello">Click me!</button>
+`, {
+  sayHello () {
+    window.alert('Hello HTML!)
+  }
+})
+```
+
+The part before the colon specifies the type of the event, the part after it the method of the listener object to call. If the method name is omitted, the listener object itself will get added as an event listener (assuming of course it implements the [EventListener](https://www.w3.org/TR/DOM-Level-2-Events/events.html#Events-EventListener) interface):
+
+```javascript
+const { button } = fromHTML(`
+  <button ref="button" on="click">Click me!</button>
+`, {
+  handleEvent ({ type }) {
+    if (type === 'click) {
+      window.alert('Hello HTML!)
+    }
+  }
+})
+```
+
+Multiple events can be bound with a space-separated list:
+
+```javascript
+const { button } = fromHTML(`
+  <button
+    ref="button"
+    on="click:sayHello blur:sayGoobye"
+  >Click me!</button>
+`, {
+  sayHello () {
+    window.alert('Hello HTML!)
+  },
+  sayGoobye () {
+    throw 'Goodbye!'
+  }
+})
+```
+
+### Options
+
+The following options can be specified:
+
+- `refAttribute: string` -- the attribute to get the element references from; defaults to `ref`
+- `eventAttribute: string` -- the attribute denoting event bindings; defaults to `on`
+- `removeRefAttribute: boolean` -- whether to remove the reference attribute afterwards; defaults to `true`
+- `removeEventAttribute: boolean` -- whether to remove the event attribute afterwards; defaults to `true`
 
 For example, if you want to keep the `ref` attribute you might use `data-*` attributes for HTML compliance:
 
@@ -145,6 +197,10 @@ const { button } = fromHTML(`
   removeRefAttribute: false
 })
 ```
+
+## Breaking Changes
+
+As of version 0.3.0, the options object is not the 2nd but the 3rd argument.
 
 ## License
 

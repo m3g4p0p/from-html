@@ -4,6 +4,16 @@
 
 A tiny utility function to get element references directly from a HTML string.
 
+- [from-html](#from-html)
+  - [Why?](#why)
+  - [Installation](#installation)
+  - [Usage](#usage)
+    - [References](#references)
+    - [Events](#events)
+    - [Options](#options)
+  - [Breaking Changes](#breaking-changes)
+  - [License](#license)
+
 ## Why?
 
 If you want to create a somewhat complex element tree with JS you may have found yourself writing something like this:
@@ -141,12 +151,12 @@ const { button } = fromHTML(`
   <button ref="button" on="click:sayHello">Click me!</button>
 `, {
   sayHello () {
-    window.alert('Hello HTML!)
+    window.alert('Hello HTML!')
   }
 })
 ```
 
-The part before the colon specifies the type of the event, the part after it the method of the listener object to call. If the method name is omitted, the listener object itself will get added as an event listener (assuming of course it implements the [EventListener](https://www.w3.org/TR/DOM-Level-2-Events/events.html#Events-EventListener) interface):
+The part before the colon specifies the type of the event, the part after it the method of the listener object to call. If the method name is omitted, the listener object itself will be used to handle events (assuming of course it implements the [EventListener](https://www.w3.org/TR/DOM-Level-2-Events/events.html#Events-EventListener) interface):
 
 ```javascript
 const { button } = fromHTML(`
@@ -154,7 +164,7 @@ const { button } = fromHTML(`
 `, {
   handleEvent ({ type }) {
     if (type === 'click) {
-      window.alert('Hello HTML!)
+      window.alert('Hello HTML!')
     }
   }
 })
@@ -170,9 +180,9 @@ const { button } = fromHTML(`
   >Click me!</button>
 `, {
   sayHello () {
-    window.alert('Hello HTML!)
+    window.alert('Hello HTML!')
   },
-  sayGoobye () {
+  sayGoodbye () {
     throw 'Goodbye!'
   }
 })

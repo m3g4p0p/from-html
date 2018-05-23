@@ -139,5 +139,52 @@ describe('::fromHTML', () => {
 
       expect(foo.getAttribute('ref')).toBe('foo')
     })
+
+    it('should assign refs to the event listener', () => {
+      const foo = {}
+
+      const bar = fromHTML(`
+        <div ref="baz"></div>
+      `, foo, {
+        assignToEventListener: true
+      })
+
+      expect(foo.baz instanceof window.HTMLElement).toBe(true)
+      expect(foo).toBe(bar)
+    })
+
+    it('should not assign references by default', () => {
+      const foo = {}
+
+      fromHTML(`
+        <div ref="bar"></div>
+      `, foo)
+
+      expect(foo.bar).toBeUndefined()
+
+      fromHTML(`
+        <div ref="bar"></div>
+      `, foo, {
+        refAttribute: 'data-ref'
+      })
+
+      expect(foo.bar).toBeUndefined()
+    })
+
+    it('should accept a boolean as shorthand for assigning the refs', () => {
+      const foo = {}
+
+      fromHTML(`
+        <div ref="bar"></div>
+      `, foo, false)
+
+      expect(foo.bar).toBeUndefined()
+
+      fromHTML(`
+        <div ref="bar"></div>
+      `, foo, true)
+
+      expect(foo.bar instanceof window.HTMLElement).toBe(true)
+    })
   })
 })

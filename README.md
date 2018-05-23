@@ -155,23 +155,7 @@ const { button } = fromHTML(`
 })
 ```
 
-The part before the colon specifies the type of the event, the part after it the method of the listener object to call. If the method name is omitted, the listener object itself will be used to handle events (assuming of course it implements the [EventListener](https://www.w3.org/TR/DOM-Level-2-Events/events.html#Events-EventListener) interface):
-
-```javascript
-const { button } = fromHTML(`
-  <button ref="button" on="click">Click me!</button>
-`, {
-  handleEvent ({ type }) {
-    switch (type) {
-      case 'click':
-        window.alert('Hello HTML!')
-      // ...
-    }
-  }
-})
-```
-
-Multiple events can be bound with a space-separated list:
+The part before the colon specifies the type of the event, the part after it the method of the listener object to call. Multiple events can be bound with a space-separated list:
 
 ```javascript
 const { button } = fromHTML(`
@@ -189,14 +173,37 @@ const { button } = fromHTML(`
 })
 ```
 
+If the method name is omitted, the listener object itself will be used to handle events (assuming of course it implements the [EventListener](https://www.w3.org/TR/DOM-Level-2-Events/events.html#Events-EventListener) interface):
+
+```javascript
+const { button } = fromHTML(`
+  <button ref="button" on="click">Click me!</button>
+`, {
+  handleEvent ({ type }) {
+    switch (type) {
+      case 'click':
+        window.alert('Hello HTML!')
+        break
+      case 'blur':
+        throw 'Goodbye!'
+        break
+      // ...
+    }
+  }
+})
+```
+
 ### Options
 
 The following options can be specified:
 
-- `refAttribute: string` -- the attribute to get the element references from; defaults to `ref`
-- `eventAttribute: string` -- the attribute denoting event bindings; defaults to `on`
-- `removeRefAttribute: boolean` -- whether to remove the reference attribute afterwards; defaults to `true`
-- `removeEventAttribute: boolean` -- whether to remove the event attribute afterwards; defaults to `true`
+Name | Type | Default | Description
+-----|------|---------|------------
+`refAttribute` | `string` | `ref` | The attribute to get the element references from
+`eventAttribute` | `string` | `on` | The attribute denoting event bindings
+`removeRefAttribute` | `boolean` | `true` | Whether to remove the reference attribute afterwards
+`removeEventAttribute` | `boolean` | `true` | Whether to remove the event attribute afterwards
+`assignToEventListener` | `boolean` | `false` | Whether to assign the element references to the event listener; in this case, the merged object will also be returned
 
 For example, if you want to keep the `ref` attribute you might use `data-*` attributes for HTML compliance:
 
@@ -207,6 +214,28 @@ const { button } = fromHTML(`
   refAttribute: 'data-ref',
   removeRefAttribute: false
 })
+```
+
+Instead of an options object you can also pass a boolean as shorthand for the `assignToEventListener` option:
+
+```javascript
+class DisposableButton {
+  constructor (text) {
+    fromHTML(`
+      <button ref="_el" on="click">${text}</button>
+    `, this, true)
+  }
+
+  get el () {
+    return this._el
+  }
+
+  handleEvent ({ type }) {
+    if (type === 'click') {
+      this._el.remove()
+    }
+  }
+}
 ```
 
 ## Breaking Changes

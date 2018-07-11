@@ -1,15 +1,6 @@
-import { JSDOM } from 'jsdom'
-import fromHTML from '../src/from-html'
+const fromHTML = require('../src/from-html')
 
 describe('::fromHTML', () => {
-  beforeEach(() => {
-    const jsdom = new JSDOM('<!doctype html><html><body></body></html>')
-    const { window } = jsdom
-
-    global.window = window
-    global.document = window.document
-  })
-
   describe('references', () => {
     it('should create single references', () => {
       const { foo } = fromHTML(`

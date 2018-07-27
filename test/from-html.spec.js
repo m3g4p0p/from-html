@@ -44,7 +44,7 @@ describe('::fromHTML', () => {
   })
 
   describe('events', () => {
-    it('should call a listener', done => {
+    it('should call an event handler', done => {
       const { foo } = fromHTML(`
         <div ref="foo" on="click:handleClick"></div>
       `, {
@@ -57,7 +57,7 @@ describe('::fromHTML', () => {
       foo.click()
     })
 
-    it('should call multiple listeners', done => {
+    it('should call multiple handlers', done => {
       let clickReceived
       let focusReceived
 
@@ -131,13 +131,13 @@ describe('::fromHTML', () => {
       expect(foo.getAttribute('ref')).toBe('foo')
     })
 
-    it('should assign refs to the event listener', () => {
+    it('should assign refs to the controller', () => {
       const foo = {}
 
       const bar = fromHTML(`
         <div ref="baz"></div>
       `, foo, {
-        assignToEventListener: true
+        assignToController: true
       })
 
       expect(foo.baz instanceof window.HTMLElement).toBe(true)
@@ -162,6 +162,19 @@ describe('::fromHTML', () => {
       expect(foo.bar).toBeUndefined()
     })
 
+    it('should assign references to a given property', () => {
+      const foo = {}
+
+      const bar = fromHTML(`
+        <div ref="baz"></div>
+      `, foo, {
+        assignToController: 'refs'
+      })
+
+      expect(foo.refs.baz instanceof window.HTMLElement).toBe(true)
+      expect(foo.refs).toBe(bar)
+    })
+
     it('should accept a boolean as shorthand for assigning the refs', () => {
       const foo = {}
 
@@ -176,6 +189,17 @@ describe('::fromHTML', () => {
       `, foo, true)
 
       expect(foo.bar instanceof window.HTMLElement).toBe(true)
+    })
+
+    it('should accept a string as a shorthand for assigning the refs to a prop', () => {
+      const foo = {}
+
+      const bar = fromHTML(`
+        <div ref="baz"></div>
+      `, foo, 'refs')
+
+      expect(foo.refs.baz instanceof window.HTMLElement).toBe(true)
+      expect(foo.refs).toBe(bar)
     })
   })
 })

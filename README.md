@@ -10,6 +10,7 @@ A small utility function to get element references directly from a HTML string.
   - [References](#references)
   - [Events](#events)
   - [Options](#options)
+  - [Assigning to the controller](#assigning-to-the-controller)
 - [Breaking Changes](#breaking-changes)
 - [License](#license)
 
@@ -94,7 +95,7 @@ Or if you prefer the old-fashioned way:
 ## Usage
 
 ```
-fromHTML(htmlString [, eventListener [, options]])
+fromHTML(htmlString [, controller [, options]])
 ```
 
 ### References
@@ -129,7 +130,7 @@ const { list, items } = fromHTML('#my-template')
 
 ### Events
 
-While at it, you can also pass an event listener object and add event bindings with `on` attributes:
+While at it, you can also pass a controller object and add event listeners with `on` attributes:
 
 ```javascript
 const { button } = fromHTML(`
@@ -141,7 +142,7 @@ const { button } = fromHTML(`
 })
 ```
 
-The part before the colon specifies the type of the event, the part after it the method of the listener object to call. Multiple events can be bound with a space-separated list:
+The part before the colon specifies the type of the event, the part after it the method of the controller to call. Multiple events can be bound with a space-separated list:
 
 ```javascript
 const { button } = fromHTML(`
@@ -159,18 +160,18 @@ const { button } = fromHTML(`
 })
 ```
 
-If the method name is omitted, the listener object itself will be used to handle events (assuming of course it implements the [EventListener](https://www.w3.org/TR/DOM-Level-2-Events/events.html#Events-EventListener) interface):
+If the method name is omitted, the controller itself will be used to handle events (assuming of course it implements the [EventListener](https://www.w3.org/TR/DOM-Level-2-Events/events.html#Events-EventListener) interface):
 
 ```javascript
 const { button } = fromHTML(`
-  <button ref="button" on="click blur">Click me!</button>
+  <button ref="button" on="mousedown mouseup">Click me!</button>
 `, {
   handleEvent ({ type }) {
     switch (type) {
-      case 'click':
+      case 'mousedown':
         window.alert('Hello HTML!')
         break
-      case 'blur':
+      case 'mouseup':
         throw 'Goodbye!'
     }
   }
@@ -181,13 +182,13 @@ const { button } = fromHTML(`
 
 The following options can be specified:
 
-Name | Type | Default | Description
------|------|---------|------------
-`refAttribute` | `string` | `ref` | The attribute to get the element references from
-`eventAttribute` | `string` | `on` | The attribute denoting event bindings
-`removeRefAttribute` | `boolean` | `true` | Whether to remove the reference attribute afterwards
-`removeEventAttribute` | `boolean` | `true` | Whether to remove the event attribute afterwards
-`assignToEventListener` | `boolean` | `false` | Whether to assign the element references to the event listener; if `true`, the merged object will be returned
+| Name                    | Type                | Default | Description                                                                                                                                                                    |
+| ----------------------- | ------------------- | ------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `refAttribute`          | `string`            | `ref`   | The attribute to get the element references from                                                                                                                               |
+| `eventAttribute`        | `string`            | `on`    | The attribute denoting event bindings                                                                                                                                          |
+| `removeRefAttribute`    | `boolean`           | `true`  | Whether to remove the reference attribute afterwards                                                                                                                           |
+| `removeEventAttribute`  | `boolean`           | `true`  | Whether to remove the event attribute afterwards                                                                                                                               |
+| `assignToController` | `boolean`\|`string` | `false` | Whether to assign the element references to the controller, or to a given property of the controller if a string is provided |
 
 For example, if you want to keep the `ref` attribute you might use `data-*` attributes for HTML compliance:
 
@@ -200,7 +201,9 @@ const { button } = fromHTML(`
 })
 ```
 
-Instead of an options object you can also pass a boolean as a shorthand for the `assignToEventListener` option:
+### Assigning to the controller
+
+Instead of an options object you can also pass a boolean as a shorthand for the `assignToController` option:
 
 ```javascript
 class DisposableButton {
@@ -210,8 +213,8 @@ class DisposableButton {
     `, this, true)
   }
 
-  get el () {
-    return this._el
+  mount (target) {
+    target.append(this._el)
   }
 
   handleEvent ({ type }) {
@@ -221,6 +224,38 @@ class DisposableButton {
   }
 }
 ```
+
+It is also possible to pass a string to specify a property to which the references should get assigned:
+
+```javascript
+class SwitchButton {
+  constructor () {
+    fromHTML(`
+      <span ref="container">
+        <button ref="onBtn" on="click">on</button>
+        <button ref="offBtn" on="click" hidden>off</button>
+      </span>
+    `, this, 'refs')
+  }
+
+  mount (target) {
+    target.append(this.refs.container)
+  }
+
+  handleEvent ({ type }) {
+    const toggleHidden = el => {
+      el.hidden = !el.hidden
+    }
+
+    if (type === 'click') {
+      toggleHidden(this.refs.onBtn)
+      toggleHidden(this.refs.offBtn)
+    }
+  }
+}
+```
+
+In both cases the object to which the references got assigned will be returned (i.e. the controller itself or its specified property).
 
 ## Breaking Changes
 

@@ -178,17 +178,33 @@ const { button } = fromHTML(`
 })
 ```
 
+**&#129514; Experimental:** You can use a double colon to denote that the method passed to an event listener should be bound to the controller:
+
+```javascript
+const { button } = fromHTML(`
+  <button ref="button" on="click::handleClick">Click me!</button>
+`, {
+  meaningOfLife: 1000,
+
+  handleClick () {
+    window.alert(this.meaningOfLife)
+  }
+})
+```
+
+There is however no way to get a reference to the bound method, so you won't ever be able to remove the event listener. For this reason, this feature may be changed or removed in the future; if you need to have `this` refer to the controller, better use `handleEvent()` instead. But if you have a good solution to this problem please [let me know](./CONTRIBUTING.md)! `:-)`
+
 ### Options
 
 The following options can be specified:
 
-| Name                    | Type                | Default | Description                                                                                                                                                                    |
-| ----------------------- | ------------------- | ------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `refAttribute`          | `string`            | `ref`   | The attribute to get the element references from                                                                                                                               |
-| `eventAttribute`        | `string`            | `on`    | The attribute denoting event bindings                                                                                                                                          |
-| `removeRefAttribute`    | `boolean`           | `true`  | Whether to remove the reference attribute afterwards                                                                                                                           |
-| `removeEventAttribute`  | `boolean`           | `true`  | Whether to remove the event attribute afterwards                                                                                                                               |
-| `assignToController` | `boolean`\|`string` | `false` | Whether to assign the element references to the controller, or to a given property of the controller if a string is provided |
+| Name                   | Type                | Default | Description                                                                                                                  |
+| ---------------------- | ------------------- | ------- | ---------------------------------------------------------------------------------------------------------------------------- |
+| `refAttribute`         | `string`            | `ref`   | The attribute to get the element references from                                                                             |
+| `eventAttribute`       | `string`            | `on`    | The attribute denoting event bindings                                                                                        |
+| `removeRefAttribute`   | `boolean`           | `true`  | Whether to remove the reference attribute afterwards                                                                         |
+| `removeEventAttribute` | `boolean`           | `true`  | Whether to remove the event attribute afterwards                                                                             |
+| `assignToController`   | `boolean`\|`string` | `false` | Whether to assign the element references to the controller, or to a given property of the controller if a string is provided |
 
 For example, if you want to keep the `ref` attribute you might use `data-*` attributes for HTML compliance:
 

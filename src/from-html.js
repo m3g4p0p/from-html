@@ -42,8 +42,17 @@ export default function fromHTML (html, controller = null, options = {}) {
       .trim()
       .split(/\s+/)
       .forEach(binding => {
-        const [type, method] = binding.split(':')
-        const handler = method ? controller[method] : controller
+        const [type, method, boundMethod] = binding.split(':')
+
+        /**
+         * @todo Find a good way to provide the possibility
+         * to remove the bound method
+         * */
+        const handler = boundMethod
+          ? controller[boundMethod].bind(controller)
+          : method
+            ? controller[method]
+            : controller
 
         current.addEventListener(type, handler)
       })

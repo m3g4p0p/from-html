@@ -91,16 +91,16 @@ describe('::fromHTML', () => {
     })
 
     it('should call handleEvent', done => {
-      const listener = {
+      const controller = {
         handleEvent () {
-          expect(this).toBe(listener)
+          expect(this).toBe(controller)
           done()
         }
       }
 
       const { foo } = fromHTML(`
         <div ref="foo" on="click"></div>
-      `, listener)
+      `, controller)
 
       foo.click()
     })

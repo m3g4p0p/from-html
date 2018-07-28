@@ -130,7 +130,7 @@ const { list, items } = fromHTML('#my-template')
 
 ### Events
 
-While at it, you can also pass a controller object and add event listeners with `on` attributes:
+While at it, you can also add event listeners by providing a controller object and binding its methods with `on` attributes:
 
 ```javascript
 const { button } = fromHTML(`
@@ -148,7 +148,7 @@ The part before the colon specifies the type of the event, the part after it the
 const { button } = fromHTML(`
   <button
     ref="button"
-    on="click:sayHello blur:sayGoodbye"
+    on="mousedown:sayHello mouseup:sayGoodbye"
   >Click me!</button>
 `, {
   sayHello () {
@@ -160,7 +160,7 @@ const { button } = fromHTML(`
 })
 ```
 
-If the method name is omitted, the controller itself will be used to handle events (assuming of course it implements the [EventListener](https://www.w3.org/TR/DOM-Level-2-Events/events.html#Events-EventListener) interface):
+If the method name is omitted, the controller object itself will be used to handle events (assuming of course it implements the [EventListener](https://www.w3.org/TR/DOM-Level-2-Events/events.html#Events-EventListener) interface):
 
 ```javascript
 const { button } = fromHTML(`

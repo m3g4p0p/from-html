@@ -37,21 +37,20 @@ export default function fromHTML (html, controller = null, options = {}) {
 
   // Add event listeners
   Array.from(events, current => {
-    const attrValue = current.getAttribute(evtAttr).trim()
-    const handlers = attrValue.split(/\s+/)
+    current
+      .getAttribute(evtAttr)
+      .trim()
+      .split(/\s+/)
+      .forEach(binding => {
+        const [type, method] = binding.split(':')
+        const handler = method ? controller[method] : controller
+
+        current.addEventListener(type, handler)
+      })
 
     if (removeEvt) {
       current.removeAttribute(evtAttr)
     }
-
-    handlers.forEach(handler => {
-      const [type, method] = handler.split(':')
-
-      current.addEventListener(type, method
-        ? controller[method]
-        : controller
-      )
-    })
   })
 
   if (assignProp) {
@@ -60,9 +59,10 @@ export default function fromHTML (html, controller = null, options = {}) {
 
   // Add the references to the target object
   return Array.from(refs).reduce((carry, current) => {
-    const attrValue = current.getAttribute(refAttr).trim()
-    const asArray = /\[\]$/.test(attrValue)
-    const propName = asArray ? attrValue.slice(0, -2) : attrValue
+    const [, propName, asArray] = current
+      .getAttribute(refAttr)
+      .trim()
+      .match(/(.*?)(\[\])?$/)
 
     if (removeRef) {
       current.removeAttribute(refAttr)

@@ -12,7 +12,7 @@
  * @param {boolean|string} [options.assignToController = false] - whether to assign the references to the controller
  * @returns {object} references as specified in the HTML
  */
-export default function fromHTML (html, controller = null, options = {}) {
+export default function fromHTML (html, controller = null, options = false) {
   const {
     refAttribute: refAttr = 'ref',
     eventAttribute: evtAttr = 'on',
@@ -32,12 +32,12 @@ export default function fromHTML (html, controller = null, options = {}) {
     ? document.getElementById(elementId).innerHTML
     : html
 
-  const refs = container.querySelectorAll(`[${refAttr}]`)
-  const events = container.querySelectorAll(`[${evtAttr}]`)
+  const refElements = container.querySelectorAll(`[${refAttr}]`)
+  const evtElements = container.querySelectorAll(`[${evtAttr}]`)
 
   // Add event listeners
-  Array.from(events, current => {
-    current
+  Array.from(evtElements, element => {
+    element
       .getAttribute(evtAttr)
       .trim()
       .split(/\s+/)
@@ -45,11 +45,11 @@ export default function fromHTML (html, controller = null, options = {}) {
         const [type, method] = binding.split(':')
         const handler = method ? controller[method] : controller
 
-        current.addEventListener(type, handler)
+        element.addEventListener(type, handler)
       })
 
     if (removeEvt) {
-      current.removeAttribute(evtAttr)
+      element.removeAttribute(evtAttr)
     }
   })
 
@@ -58,21 +58,21 @@ export default function fromHTML (html, controller = null, options = {}) {
   }
 
   // Add the references to the target object
-  return Array.from(refs).reduce((carry, current) => {
-    const [, propName, asArray] = current
+  return Array.from(refElements).reduce((carry, element) => {
+    const [, propName, asArray] = element
       .getAttribute(refAttr)
       .trim()
       .match(/(.*?)(\[\])?$/)
 
     if (removeRef) {
-      current.removeAttribute(refAttr)
+      element.removeAttribute(refAttr)
     }
 
     if (asArray) {
       carry[propName] = carry[propName] || []
-      carry[propName].push(current)
+      carry[propName].push(element)
     } else {
-      carry[propName] = current
+      carry[propName] = element
     }
 
     return carry

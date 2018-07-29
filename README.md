@@ -74,22 +74,22 @@ const { modal } = fromHTML(`
 
 ## Installation
 
-Install like usual:
+Install as usual:
 
 ```
 yarn add from-html
 ```
 
-Then include it in your JS like
+And in your JS:
 
 ```javascript
 import fromHTML from 'from-html'
 ```
 
-Or if you prefer the old-fashioned way:
+The script can also be downloaded or directly included from [unpkg.com](https://unpkg.com/from-html):
 
 ```html
-<script src="./node_modules/from-html/lib/from-html.js"></script>
+<script src="https://unpkg.com/from-html"></script>
 ```
 
 ## Usage
@@ -203,7 +203,7 @@ const { button } = fromHTML(`
 
 ### Assigning to the controller
 
-Instead of an options object you can also pass a boolean as a shorthand for the `assignToController` option:
+Instead of an options object you can also pass a boolean as a shorthand for `assignToController`:
 
 ```javascript
 class DisposableButton {

@@ -7,7 +7,7 @@ describe('::fromHTML', () => {
         <div ref="foo"></div>
       `)
 
-      expect(foo instanceof window.HTMLElement).toBe(true)
+      expect(foo instanceof HTMLElement).toBe(true)
     })
 
     it('should create nested references', () => {
@@ -39,7 +39,7 @@ describe('::fromHTML', () => {
 
       const { foo } = fromHTML('#my-template')
 
-      expect(foo instanceof window.HTMLElement).toBe(true)
+      expect(foo instanceof HTMLElement).toBe(true)
     })
   })
 
@@ -112,7 +112,7 @@ describe('::fromHTML', () => {
         <div data-ref="foo"></div>
       `, null, { refAttribute: 'data-ref' })
 
-      expect(foo instanceof window.HTMLElement).toBe(true)
+      expect(foo instanceof HTMLElement).toBe(true)
     })
 
     it('should remove reference attributes by default', () => {
@@ -140,7 +140,7 @@ describe('::fromHTML', () => {
         assignToController: true
       })
 
-      expect(foo.baz instanceof window.HTMLElement).toBe(true)
+      expect(foo.baz instanceof HTMLElement).toBe(true)
       expect(foo).toBe(bar)
     })
 
@@ -171,7 +171,7 @@ describe('::fromHTML', () => {
         assignToController: 'refs'
       })
 
-      expect(foo.refs.baz instanceof window.HTMLElement).toBe(true)
+      expect(foo.refs.baz instanceof HTMLElement).toBe(true)
       expect(foo.refs).toBe(bar)
     })
 
@@ -188,7 +188,7 @@ describe('::fromHTML', () => {
         <div ref="bar"></div>
       `, foo, true)
 
-      expect(foo.bar instanceof window.HTMLElement).toBe(true)
+      expect(foo.bar instanceof HTMLElement).toBe(true)
     })
 
     it('should accept a string as a shorthand for assigning the refs to a prop', () => {
@@ -198,7 +198,7 @@ describe('::fromHTML', () => {
         <div ref="baz"></div>
       `, foo, 'refs')
 
-      expect(foo.refs.baz instanceof window.HTMLElement).toBe(true)
+      expect(foo.refs.baz instanceof HTMLElement).toBe(true)
       expect(foo.refs).toBe(bar)
     })
   })

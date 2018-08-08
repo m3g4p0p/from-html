@@ -53,11 +53,11 @@ export default function fromHTML (html, controller = null, options = false) {
     }
   })
 
+  // Add the references to the target object
   if (assignProp) {
     controller[assignProp] = controller[assignProp] || {}
   }
 
-  // Add the references to the target object
   return Array.from(refElements).reduce((carry, element) => {
     const [, propName, asArray] = element
       .getAttribute(refAttr)

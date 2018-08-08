@@ -32,7 +32,8 @@
   },
   "standard": {
     "env": {
-      "jasmine": true
+      "jasmine": true,
+      "browser": true
     }
   }
 }

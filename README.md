@@ -11,7 +11,6 @@ A small utility function to get element references directly from a HTML string.
   - [Events](#events)
   - [Options](#options)
   - [Assigning to the controller](#assigning-to-the-controller)
-- [Breaking Changes](#breaking-changes)
 - [License](#license)
 
 ## Why?
@@ -256,10 +255,6 @@ class SwitchButton {
 ```
 
 In both cases the object to which the references got assigned will be returned (i.e. the controller itself or its specified property).
-
-## Breaking Changes
-
-As of version 0.3.0, the options object is not the 2nd but the 3rd argument.
 
 ## License
 

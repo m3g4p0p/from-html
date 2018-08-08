@@ -1,8 +1,9 @@
 # from-html
 
 [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
+![Coverage 100%](https://img.shields.io/badge/coverage-100%25-brightgreen.svg)
 
-A small utility function to get element references directly from a HTML string.
+A utility function to get element references directly from a HTML string.
 
 - [Why?](#why)
 - [Installation](#installation)

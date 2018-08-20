@@ -12,6 +12,7 @@ A utility function to get element references directly from a HTML string.
   - [Events](#events)
   - [Options](#options)
   - [Assigning to the controller](#assigning-to-the-controller)
+  - [Testing](#testing)
 - [License](#license)
 
 ## Why?
@@ -256,6 +257,10 @@ class SwitchButton {
 ```
 
 In both cases the object to which the references got assigned will be returned (i.e. the controller itself or its specified property).
+
+### Testing
+
+You can test your from-html code using [dom-testing-library](https://github.com/kentcdodds/dom-testing-library). [Watch this demo of dom-testing-library + from-html](https://www.youtube.com/watch?v=OLA1xZ4-tmQ&list=PLV5CVI1eNcJgCrPH_e6d57KRUTiDZgs0u) to learn more.
 
 ## License
 

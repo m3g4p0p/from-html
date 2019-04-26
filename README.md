@@ -115,13 +115,13 @@ const { list, items } = fromHTML(`
 Instead of a HTML string it's also possible to pass an ID selector of a template to use:
 
 ```html
-<script type="text/template" id="my-template">
+<template id="my-template">
   <ul ref="list">
     <li ref="items[]">Jane</li>
     <li ref="items[]">John</li>
     <li ref="items[]">Jimmy</li>
   </ul>
-</script>
+</template>
 ```
 
 ```javascript

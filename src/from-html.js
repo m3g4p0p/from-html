@@ -1,3 +1,5 @@
+import { fromTemplate } from './util'
+
 /**
  * Get element references from a HTML string
  *
@@ -24,14 +26,8 @@ export default function fromHTML (html, controller = null, options = false) {
     ) ? options : false
   } = typeof options === 'object' ? options : {}
 
-  const container = document.createElement('div')
-  const elementId = html[0] === '#' && html.slice(1)
+  const container = fromTemplate(html)
   const assignProp = typeof assign === 'string' && assign
-
-  container.innerHTML = elementId
-    ? document.getElementById(elementId).innerHTML
-    : html
-
   const refElements = container.querySelectorAll(`[${refAttr}]`)
   const evtElements = container.querySelectorAll(`[${evtAttr}]`)
 

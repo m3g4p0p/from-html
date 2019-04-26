@@ -32,9 +32,9 @@ describe('::fromHTML', () => {
 
     it('should work with passing an ID', () => {
       document.body.innerHTML = `
-        <script type="text/template" id="my-template">
+        <template id="my-template">
           <div ref="foo"></div>
-        </script>
+        </template>
       `
 
       const { foo } = fromHTML('#my-template')

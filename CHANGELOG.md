@@ -1,12 +1,12 @@
 # Changelog
 
-## 0.4.4
+## 0.4.0
 
 ### Added
 
 * Native template element support
 
-## 0.3.0
+## 0.3.2
 
 ### Added
 

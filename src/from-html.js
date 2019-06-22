@@ -1,4 +1,4 @@
-import { fromTemplate } from './util'
+import { fromString, fromElementId } from './util'
 
 /**
  * Get element references from a HTML string
@@ -26,10 +26,12 @@ export default function fromHTML (html, controller = null, options = false) {
     ) ? options : false
   } = typeof options === 'object' ? options : {}
 
-  const container = fromTemplate(html)
+  const fragment = html[0] === '#'
+    ? fromElementId(html.slice(1))
+    : fromString(html)
   const assignProp = typeof assign === 'string' && assign
-  const refElements = container.querySelectorAll(`[${refAttr}]`)
-  const evtElements = container.querySelectorAll(`[${evtAttr}]`)
+  const refElements = fragment.querySelectorAll(`[${refAttr}]`)
+  const evtElements = fragment.querySelectorAll(`[${evtAttr}]`)
 
   // Add event listeners
   Array.from(evtElements, element => {

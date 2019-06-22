@@ -1,12 +1,18 @@
 # Changelog
 
-## 3.0.2
+## 0.4.4
+
+### Added
+
+* Native template element support
+
+## 0.3.0
 
 ### Added
 
 * Option to assign references to a property of the controller
 
-## 3.0.0
+## 0.3.0
 
 ### Added
 

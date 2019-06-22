@@ -112,7 +112,7 @@ const { list, items } = fromHTML(`
 `)
 ```
 
-Instead of a HTML string it's also possible to pass an ID selector of a template to use:
+Instead of a HTML string it's also possible to pass an ID selector of a template element (or any element that should be used as a template):
 
 ```html
 <template id="my-template">
@@ -127,6 +127,8 @@ Instead of a HTML string it's also possible to pass an ID selector of a template
 ```javascript
 const { list, items } = fromHTML('#my-template')
 ```
+
+Note that if the referenced element isn't an actual template element, the element will be cloned.
 
 ### Events
 

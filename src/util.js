@@ -1,21 +1,16 @@
-const fromAnyElement = elementId => {
-  const template = document.getElementById(elementId)
+const fromElementId = elementId => {
+  const element = document.getElementById(elementId)
 
-  if (template instanceof HTMLTemplateElement) {
-    return template.content
-  }
-
-  return document.importNode(template, true)
+  return element instanceof HTMLTemplateElement
+    ? element.content
+    : document.importNode(element, true)
 }
 
-export const fromTemplate = html => {
-  const elementId = html[0] === '#' && html.slice(1)
+const fromString = html => Object.assign(
+  document.createElement('template'),
+  { innerHTML: html }
+).content
 
-  if (elementId) {
-    return fromAnyElement(elementId)
-  }
-
-  const template = document.createElement('template')
-  template.innerHTML = html
-  return template.content
-}
+export const fromTemplate = html => html[0] === '#'
+  ? fromElementId(html.slice(1))
+  : fromString(html)

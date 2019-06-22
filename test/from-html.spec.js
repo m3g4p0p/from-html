@@ -30,11 +30,23 @@ describe('::fromHTML', () => {
       expect(foo[0].nextElementSibling).toBe(foo[1])
     })
 
-    it('should work with passing an ID', () => {
+    it('should work with passing a template ID', () => {
       document.body.innerHTML = `
         <template id="my-template">
           <div ref="foo"></div>
         </template>
+      `
+
+      const { foo } = fromHTML('#my-template')
+
+      expect(foo instanceof HTMLElement).toBe(true)
+    })
+
+    it('should work with passing any element ID', () => {
+      document.body.innerHTML = `
+        <div id="my-template">
+          <div ref="foo"></div>
+        </div>
       `
 
       const { foo } = fromHTML('#my-template')

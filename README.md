@@ -128,7 +128,7 @@ Instead of a HTML string it's also possible to pass an ID selector of a template
 const { list, items } = fromHTML('#my-template')
 ```
 
-Note that if the referenced element isn't an actual template element, the element will be cloned.
+Note that if the referenced element isn't an actual template element, the element will still be cloned; there won't be any references (let alone modifications) to the existing DOM.
 
 ### Events
 
@@ -261,4 +261,4 @@ In both cases the object to which the references got assigned will be returned (
 
 ## License
 
-MIT @ m3g4p0p 2018
+MIT @ m3g4p0p 2019

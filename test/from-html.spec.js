@@ -1,4 +1,4 @@
-const fromHTML = require('../src/from-html')
+import fromHTML from '../src/from-html'
 
 describe('::fromHTML', () => {
   describe('references', () => {
@@ -58,8 +58,8 @@ describe('::fromHTML', () => {
     })
 
     it('should call multiple handlers', done => {
-      let clickReceived
-      let focusReceived
+      const events = []
+      const handleEvent = ({ type }) => events.push(type)
 
       const { foo } = fromHTML(`
         <input ref="foo" on="
@@ -67,27 +67,17 @@ describe('::fromHTML', () => {
           focus:handleFocus
         "></input>
       `, {
-        handleClick ({ type }) {
-          expect(type).toBe('click')
-          clickReceived()
-        },
-        handleFocus ({ type }) {
-          expect(type).toBe('focus')
-          focusReceived()
-        }
+        handleClick: handleEvent,
+        handleFocus: handleEvent
       })
 
-      Promise.all([
-        new Promise(resolve => {
-          clickReceived = resolve
-        }),
-        new Promise(resolve => {
-          focusReceived = resolve
-        })
-      ]).then(done)
+      foo.dispatchEvent(new Event('click'))
+      foo.dispatchEvent(new Event('focus'))
 
-      foo.click()
-      foo.focus()
+      setTimeout(() => {
+        expect(events).toMatchObject(['click', 'focus'])
+        done()
+      })
     })
 
     it('should call handleEvent', done => {

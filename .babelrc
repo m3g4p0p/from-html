@@ -1,8 +1,4 @@
 {
-  "presets": [
-    "env"
-  ],
-  "plugins": [
-    "add-module-exports"
-  ]
+  "presets": [["@babel/env", { "modules": "commonjs" }]],
+  "plugins": ["add-module-exports"]
 }

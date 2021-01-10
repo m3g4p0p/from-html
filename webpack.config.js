@@ -1,5 +1,5 @@
 
-const CleanWebpackPlugin = require('clean-webpack-plugin')
+const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 const { resolve, join } = require('path')
 
 const path = {
@@ -10,7 +10,7 @@ const path = {
 module.exports = ({ production = false } = {}) => ({
   entry: join(path.src, 'from-html.js'),
   plugins: [
-    new CleanWebpackPlugin(path.dist)
+    new CleanWebpackPlugin()
   ],
   module: {
     rules: [{

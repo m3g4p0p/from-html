@@ -3,14 +3,14 @@
  *
  * @exports fromHTML
  * @param {string} html - HTML string or ID selector
- * @param {object} [controller = null] - controller object
- * @param {object|boolean|string} [options = false] - options object or boolean / string as shorthand for assigning to the controller
+ * @param {Object} [controller = null] - controller object
+ * @param {Object|boolean|string} [options = false] - options object or boolean / string as shorthand for assigning to the controller
  * @param {string} [options.refAttribute = 'ref'] - the attribute to get the element references from
  * @param {string} [options.eventAttribute = 'on'] - the attribute denoting event bindings
  * @param {boolean} [options.removeRefAttribute = true] - whether to remove the reference attribute afterwards
  * @param {boolean} [options.removeEventAttribute = true] - whether to remove the event attribute afterwards
  * @param {boolean|string} [options.assignToController = false] - whether to assign the references to the controller
- * @returns {object} references as specified in the HTML
+ * @returns {Object.<string, HTMLElement>} references as specified in the HTML
  */
 export default function fromHTML (html, controller = null, options = false) {
   const {
@@ -21,8 +21,12 @@ export default function fromHTML (html, controller = null, options = false) {
     assignToController: assign = (
       typeof options === 'boolean' ||
       typeof options === 'string'
-    ) ? options : false
-  } = typeof options === 'object' ? options : {}
+    )
+      ? options
+      : false
+  } = typeof options === 'object'
+    ? options
+    : {}
 
   const container = document.createElement('div')
   const elementId = html[0] === '#' && html.slice(1)
@@ -36,7 +40,7 @@ export default function fromHTML (html, controller = null, options = false) {
   const evtElements = container.querySelectorAll(`[${evtAttr}]`)
 
   // Add event listeners
-  Array.from(evtElements, element => {
+  Array.from(evtElements).forEach(element => {
     element
       .getAttribute(evtAttr)
       .trim()
